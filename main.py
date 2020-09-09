@@ -2,7 +2,7 @@
 # Controlling pc with email
 
 import logging, os, pprint
-from readEmail import readEmails
+from readEmail import readEmails, deleteMails
 from rwJsonFile import readJsonFile
 from interfaz import runInterfaz
 from commandWords import getCommandWords
@@ -37,12 +37,19 @@ if credentials:
     # Get command words
     commandWords = getCommandWords (wordsList, allEmails, fromEmail, secredWord)
 
-    # Run command files
-    for word in commandWords: 
-        if word.strip().lower() in wordsList: 
-            command(word)
-    
-    # Delete read menssage
+    if commandWords: 
+        # Run command files
+        for word in commandWords: 
+            if word.strip().lower() in wordsList: 
+                command(word)
+        
+        # Delete read menssage
+        UIDs = []
+        for keys in allEmails.keys(): 
+            UIDs.append(keys)
+        deleteMails  (imap, myEmail, password, folder, UIDs)
+    else:
+        print ('No new command mails')
     
 
 # Run each 15 minutes with cron
