@@ -28,8 +28,9 @@ def runInterfaz (credentailsPath):
             requestsCredentials(credentailsPath)
             credentials = returnCredentials (credentailsPath)
             sys.exit()
-        print ('Running program...')
-        return credentials
+        else: 
+            print ('Running program...')
+            return credentials
     else:  
         print ('No registred credentials.')
         requestsCredentials (credentailsPath)

@@ -1,10 +1,11 @@
 #! python3
 # Controlling pc with email
 
-import logging, os
+import logging, os, pprint
 from readEmail import readEmails
 from rwJsonFile import readJsonFile
 from interfaz import runInterfaz
+from commandWords import getCommandWords
 
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 logging.disable()
@@ -20,26 +21,22 @@ if credentials:
     # Acces to IMAP
 
     # Get credentials
-    imap = credentials['imap']
-    myEmail = credentials['myEmail']
-    password = input ('Your password of %s: ' % myEmail)
-    fromEmail = credentials['fromEmail']
-    folder = credentials['folder']
-    search = credentials['search']
+    imap       = credentials['imap']
+    myEmail    = credentials['myEmail']
+    password   = input ('Your password of %s: ' % myEmail)
+    fromEmail  = credentials['fromEmail']
+    folder     = credentials['folder']
+    search     = credentials['search']
+    wordsList  = credentials['wordsList']
+    secredWord = input ('Your secret word in emails: ')
 
     # Acess and return all menssage
     allEmails = readEmails (imap, myEmail, password, folder, search)
-    print(allEmails) 
+
+
+    commandWords = getCommandWords (wordsList, allEmails, fromEmail, secredWord)
+
+    # Run command files
     
-
-
-
-
-
-# Open unreaded emails
-
-# Check the from emails and the content
-
-    # If the email if to Controlling pc, run file with instructions
 
 # Run each 15 minutes with cron

@@ -19,6 +19,7 @@ def readEmails (imap, myEmail, password, folder, search):
         text = ''
         if message.text_part: 
             text = message.text_part.get_payload().decode(message.text_part.charset)
+            text = text[:-2]
         dicReturn[uid] = {'fromMail': fromEmail, 'text': text}
     
     return dicReturn

@@ -12,12 +12,15 @@ def requestsCredentials (credentailsPath):
     folder       = validateCredentail('Folder emails (examle: INBOX): ', lenght=3)
     search       = validateCredentail('Email search terms (examle: UNSEEN): ', lenght=3)
     fromEmail    = validateCredentail('The from email (example: fromEmail@mail.com): ', content='@')  
+    word         = validateCredentail('Command words, sparated by white space (example: play study work): ', content='')  
+    wordsList     = word.split()
 
     credentials = {'myEmail': myEmail.strip(), 
                     'imap': imap.strip(),
-                    'folder': folder.strip(),
-                    'search': search.strip(),
-                    'fromEmail': fromEmail.strip()}
+                    'folder': folder.strip().upper(),
+                    'search': search.strip().upper(),
+                    'fromEmail': fromEmail.strip(),
+                    'wordsList': wordsList}
 
     print ('\nNew credentials saved.\n')
     writeJsonFile (credentailsPath, credentials)
