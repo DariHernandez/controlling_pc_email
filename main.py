@@ -6,6 +6,7 @@ from readEmail import readEmails
 from rwJsonFile import readJsonFile
 from interfaz import runInterfaz
 from commandWords import getCommandWords
+from commands import command
 
 logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 logging.disable()
@@ -33,10 +34,15 @@ if credentials:
     # Acess and return all menssage
     allEmails = readEmails (imap, myEmail, password, folder, search)
 
-
+    # Get command words
     commandWords = getCommandWords (wordsList, allEmails, fromEmail, secredWord)
 
     # Run command files
+    for word in commandWords: 
+        if word.strip().lower() in wordsList: 
+            command(word)
+    
+    # Delete read menssage
     
 
 # Run each 15 minutes with cron

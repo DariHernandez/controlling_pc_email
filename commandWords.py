@@ -5,12 +5,11 @@ def getCommandWords (wordsList, infoDic, fromEmail, secretWord):
     """ return command words from info emails"""
     commandWords = []
     for mailInfo in infoDic.values():
-        from_ = mailInfo['fromMail']
-        text = mailInfo['text']
+        from_   = mailInfo['fromMail']
+        text    = mailInfo['text']
+        subject = mailInfo['subject']
         
-        if from_[1] == fromEmail and secretWord in text and len(text.split()) == 2: 
-            textItems = text.split()
-            textItems.remove(secretWord)
-            commandWords.append(textItems[0])
+        if from_[1] == fromEmail and secretWord in subject and len(text.split()) == 1: 
+            commandWords.append(text)
 
     return commandWords
