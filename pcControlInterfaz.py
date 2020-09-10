@@ -1,7 +1,6 @@
 #! python3
 # Specific interfaz for the program
 
-
 import sys
 from interfaz import runInterfaz
 from requestsCredentialsAndCommands import returnCredentials, returnCredential, requestsCredentials, printCredentials, requestsCommands
