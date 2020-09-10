@@ -7,7 +7,10 @@ def commandsRun (word, commands):
     for name, commandsList in commands.items(): 
         if word.lower() == name.lower(): 
             for command in commandsList: 
-               exec(command)
+                try: 
+                    exec(command)
+                except: 
+                    print ('Error to execute command "%s"' % command)
 
 def getCommandWords (infoDic, fromEmail, secretWord):
     """ return command words from info emails"""

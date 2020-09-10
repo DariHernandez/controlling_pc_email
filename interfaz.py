@@ -18,11 +18,11 @@ def runInterfaz (infoPath, infoName, printInfo, editInfo, getInfo, keyChar):
         elif sys.argv [1:] == ['-' + keyChar, '-edit']:
             # Edit info file
             editInfo (infoPath)
-        elif sys.argv [1:] == []:
-            print ('Getting %s...' % infoName)
-            return info
         else: 
-            return ('error')
+            if len(sys.argv) == 3: 
+                return info
+            else: 
+                return ('error')
     else:  
         print ('No registred %s.' % infoName)
         editInfo (infoPath)

@@ -23,11 +23,11 @@ if credentialsCommands:
     # Get credentials
     imap       = credentialsCommands['credentials']['imap']
     myEmail    = credentialsCommands['credentials']['myEmail']
-    password   = input ('Your password of %s: ' % myEmail)
+    password   = credentialsCommands['password']
     fromEmail  = credentialsCommands['credentials']['fromEmail']
     folder     = credentialsCommands['credentials']['folder']
     search     = credentialsCommands['credentials']['search']
-    secredWord = input ('Your secret word in emails: ')
+    secredWord = credentialsCommands['secredWord']
 
     # Acess and return all menssage
     allEmails = readEmails (imap, myEmail, password, folder, search)
@@ -46,6 +46,6 @@ if credentialsCommands:
             UIDs.append(keys)
         deleteMails  (imap, myEmail, password, folder, UIDs)
     else:
-        print ('No new command mails')
+        print ('No new command emails. Check the information of the new emails.')
     
 # Run each 15 minutes with cron

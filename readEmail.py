@@ -1,14 +1,33 @@
 #! python3
 # Read email and access to IMAP
 
-import imapclient, pyzmail, pprint
+import imapclient, pyzmail, pprint, sys
 
 def readEmails (imap, myEmail, password, folder, search): 
     """ Get all emails from folder and search termns"""
-    imapObj = imapclient.IMAPClient(imap, ssl=True)
-    imapObj.login(myEmail, password)
-    imapObj.select_folder(folder, readonly=True)
-    UIDs = imapObj.search([search])
+    try: 
+        imapObj = imapclient.IMAPClient(imap, ssl=True)
+    except: 
+        print ('Connection error. Check your IMAP. --help for more information.')
+        sys.exit()
+    
+    try: 
+        imapObj.login(myEmail, password)
+    except: 
+        print ('Login error. Check your email and password. --help for more information.')
+        sys.exit()
+    
+    try:
+        imapObj.select_folder(folder, readonly=True)
+    except: 
+        print ('Folder dosent exist. Check your credentials. --help for more information.')
+        sys.exit()
+
+    try: 
+        UIDs = imapObj.search([search])
+    except: 
+        print ('Search termn error. Try SEEN or UNSEEN. Check your credentials. --help for more information.')
+        sys.exit()
 
     dicReturn = {}
 
@@ -36,4 +55,3 @@ def deleteMails  (imap, myEmail, password, folder, UIDs):
     imapObj.delete_messages(UIDs)
     imapObj.expunge()
 
-    
