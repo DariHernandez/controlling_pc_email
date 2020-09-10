@@ -4,7 +4,7 @@
 import logging, os, pprint
 from readEmail import readEmails, deleteMails
 from rwJsonFile import readJsonFile
-from interfaz import runInterfaz
+from specificInterfaz import runInterfazCrdentialsCommands
 from commandWords import getCommandWords
 from commands import command
 
@@ -14,21 +14,21 @@ logging.disable()
 # Files and initial vars
 currentDir = os.path.dirname(__file__)
 credentailsPath = os.path.join(currentDir, 'credentials.json')
+commandsPath = os.path.join(currentDir, 'commands.json')
 
-
-# Run interfaz
-credentials = runInterfaz (credentailsPath)
-if credentials: 
-    # Acces to IMAP
+# Run interfaz credentials
+credentialsCommands = runInterfazCrdentialsCommands (credentailsPath, commandsPath)
+if credentialsCommands: 
+    # Run  interfaz commands
 
     # Get credentials
-    imap       = credentials['imap']
-    myEmail    = credentials['myEmail']
+    imap       = credentialsCommands['credentials']['imap']
+    myEmail    = credentialsCommands['credentials']['myEmail']
     password   = input ('Your password of %s: ' % myEmail)
-    fromEmail  = credentials['fromEmail']
-    folder     = credentials['folder']
-    search     = credentials['search']
-    wordsList  = credentials['wordsList']
+    fromEmail  = credentialsCommands['credentials']['fromEmail']
+    folder     = credentialsCommands['credentials']['folder']
+    search     = credentialsCommands['credentials']['search']
+    wordsList  = credentialsCommands['credentials']['wordsList']
     secredWord = input ('Your secret word in emails: ')
 
     # Acess and return all menssage
