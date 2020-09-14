@@ -55,3 +55,19 @@ def deleteMails  (imap, myEmail, password, folder, UIDs):
     imapObj.delete_messages(UIDs)
     imapObj.expunge()
 
+def filterMails (infoDic, fromEmail, secretWord):
+    """ return only the emails with specific command word and from email"""
+    dicReturn = {}
+    for uid, mailInfo in infoDic.items():
+        from_   = mailInfo['fromMail']
+        text    = mailInfo['text']
+        subject = mailInfo['subject']
+        
+        if from_[1] == fromEmail and secretWord in subject and len(text.split()) == 1: 
+            dicReturn [uid] = {'fromMail': fromEmail, 
+                                'text': text, 
+                                'subject': subject}
+
+    return dicReturn
+
+

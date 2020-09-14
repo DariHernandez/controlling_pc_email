@@ -2,7 +2,7 @@
 # Controlling pc with email
 
 import logging, os, pprint, webbrowser
-from readEmail import readEmails, deleteMails
+from readEmail import readEmails, deleteMails, filterMails
 from rwJsonFile import readJsonFile
 from pcControlInterfaz import runInterfazCrdentialsCommands
 from commands import getCommandWords, commandsRun
@@ -18,7 +18,6 @@ logging.basicConfig(filename=logPath, level=logging.DEBUG, format=' %(asctime)s 
 # Run interfaz credentials
 credentialsCommands = runInterfazCrdentialsCommands (credentailsPath, commandsPath)
 if credentialsCommands: 
-    # Run  interfaz commands
 
     # Get credentials
     imap       = credentialsCommands['credentials']['imap']
@@ -33,7 +32,8 @@ if credentialsCommands:
     allEmails = readEmails (imap, myEmail, password, folder, search)
 
     # Get command words
-    commandWords = getCommandWords (allEmails, fromEmail, secredWord)
+    filterMails = filterMails (allEmails, fromEmail, secredWord)
+    commandWords = getCommandWords (filterMails)
 
     if commandWords: 
         # Run command files
@@ -42,7 +42,7 @@ if credentialsCommands:
         
         # Delete read menssage
         UIDs = []
-        for keys in allEmails.keys(): 
+        for keys in filterMails.keys(): 
             UIDs.append(keys)
         deleteMails  (imap, myEmail, password, folder, UIDs)
     else:

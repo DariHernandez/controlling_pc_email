@@ -22,15 +22,11 @@ def commandsRun (word, commands):
                     print ('Error to execute command "%s"' % command)
                     logging.warning(command)
 
-def getCommandWords (infoDic, fromEmail, secretWord):
+def getCommandWords (filterMails):
     """ return command words from info emails"""
     commandWords = []
-    for mailInfo in infoDic.values():
-        from_   = mailInfo['fromMail']
+    for mailInfo in filterMails.values():
         text    = mailInfo['text']
-        subject = mailInfo['subject']
-        
-        if from_[1] == fromEmail and secretWord in subject and len(text.split()) == 1: 
-            commandWords.append(text)
+        commandWords.append(text)
 
     return commandWords
