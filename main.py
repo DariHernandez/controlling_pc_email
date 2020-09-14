@@ -1,19 +1,19 @@
 #! python3
 # Controlling pc with email
 
-import logging, os, pprint
+import logging, os, pprint, webbrowser
 from readEmail import readEmails, deleteMails
 from rwJsonFile import readJsonFile
 from pcControlInterfaz import runInterfazCrdentialsCommands
 from commands import getCommandWords, commandsRun
 
-logging.basicConfig(level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
-logging.disable()
-
 # Files and initial vars
 currentDir = os.path.dirname(__file__)
 credentailsPath = os.path.join(currentDir, 'credentials.json')
 commandsPath = os.path.join(currentDir, 'commands.json')
+logPath = os.path.join(currentDir, 'logs.txt')
+
+logging.basicConfig(filename=logPath, level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 
 # Run interfaz credentials
 credentialsCommands = runInterfazCrdentialsCommands (credentailsPath, commandsPath)
@@ -46,6 +46,7 @@ if credentialsCommands:
             UIDs.append(keys)
         deleteMails  (imap, myEmail, password, folder, UIDs)
     else:
+        logging.info ('No new command emails. Check the information of the new emails.')
         print ('No new command emails. Check the information of the new emails.')
     
 # Run each 15 minutes with cron

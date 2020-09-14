@@ -13,11 +13,10 @@ def runInterfazCrdentialsCommands (credentialsPath, commandsPath):
     password    = ''
     secredWord  = ''
 
-
     if not credentials or not commands: 
         sys.exit()
     elif credentials == 'help' and commands == 'help': 
-        print ('write none arguments to run the program and Controlling pc with email')
+        print ('write your password and secred word, to run the program and Controlling pc with email (example "yourPassword" "YourSecredWord")')
         sys.exit()
     elif credentials == 'error' and commands == 'error': 
         print ('Syntaxis error... write --help for more information')
