@@ -1,7 +1,7 @@
 #! python3
 # Controlling pc with email
 
-import logging, os, pprint, webbrowser
+import os, pprint, logging
 from readEmail import readEmails, deleteMails, filterMails
 from commands import getCommandWords, addCommand, getFiles, runCommands
 from interfaz import Interfaz
@@ -13,11 +13,6 @@ pathCredentails = os.path.join(currentDir, 'credentials.json')
 pathConfig = os.path.join(currentDir, 'config.json')
 commandsPath = os.path.join(currentDir, 'commands.json')
 logPath = os.path.join(currentDir, 'logs.txt')
-
-logging.basicConfig(filename=logPath, level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
-
-# Run interfaz credentials
-#credentialsCommands = runInterfazCrdentialsCommands (credentailsPath, commandsPath)
 
 # Run interfaz
 myInterfaz = Interfaz (pathCredentails, pathConfig)
@@ -47,8 +42,15 @@ if commandWords:
         runCommands (pathCommands, commandWords)
     else: 
         addCommand (pathCommands)
-
-
+    
+    # Delete read menssage
+    UIDs = []
+    for keys in filterMails.keys(): 
+        UIDs.append(keys)
+    deleteMails  (imap, myEmail, password, folder, UIDs)
+else:
+    logging.info ('No new command emails.')
+    print ('No new command emails. Check the information of the new emails.')
 
 
 """
@@ -57,14 +59,7 @@ if commandWords:
         for word in commandWords: 
             commandsRun(word, credentialsCommands['commands'])
         
-        # Delete read menssage
-        UIDs = []
-        for keys in filterMails.keys(): 
-            UIDs.append(keys)
-        deleteMails  (imap, myEmail, password, folder, UIDs)
-    else:
-        logging.info ('No new command emails. Check the information of the new emails.')
-        print ('No new command emails. Check the information of the new emails.')
+
     
 # Run each 15 minutes with cron
 """

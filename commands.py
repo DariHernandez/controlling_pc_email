@@ -6,7 +6,7 @@ import logging, os, csv
 currentDir = os.path.dirname(__file__)
 logPath = os.path.join(currentDir, 'logs.txt')
 
-logging.basicConfig(filename=logPath, level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename=logPath, level=logging.INFO, format=' %(asctime)s - %(levelname)s - %(message)s')
 
 
 def getCommandWords (filterMails):
@@ -109,6 +109,9 @@ def runCommands (path, words):
                 readerCSV = csv.reader (fileCSV)
                 data = list (readerCSV)
 
+                print ('Running %s commands' % word)
+                logging.info(word)
+
                 # Ganarate command
                 for row in data:
                     if int(row[0]) == 1: 
@@ -116,7 +119,7 @@ def runCommands (path, words):
                     elif int(row[0]) == 2: 
                         command = "subprocess.Popen('%s')" % (row[1])
                     elif int(row[0]) == 3: 
-                        command = "subprocess.Popen(['%s','%s'])" % (row[1], row[1])
+                        command = "subprocess.Popen(['%s','%s'])" % (row[1], row[2])
                 
                     # Excect command
                     try: 
