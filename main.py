@@ -3,38 +3,55 @@
 
 import logging, os, pprint, webbrowser
 from readEmail import readEmails, deleteMails, filterMails
-from rwJsonFile import readJsonFile
-from pcControlInterfaz import runInterfazCrdentialsCommands
-from commands import getCommandWords, commandsRun
+from commands import getCommandWords, addCommand, getFiles, runCommands
+from interfaz import Interfaz
 
 # Files and initial vars
 currentDir = os.path.dirname(__file__)
-credentailsPath = os.path.join(currentDir, 'credentials.json')
+pathCommands = os.path.join (currentDir, 'commands')
+pathCredentails = os.path.join(currentDir, 'credentials.json')
+pathConfig = os.path.join(currentDir, 'config.json')
 commandsPath = os.path.join(currentDir, 'commands.json')
 logPath = os.path.join(currentDir, 'logs.txt')
 
 logging.basicConfig(filename=logPath, level=logging.DEBUG, format=' %(asctime)s - %(levelname)s - %(message)s')
 
 # Run interfaz credentials
-credentialsCommands = runInterfazCrdentialsCommands (credentailsPath, commandsPath)
-if credentialsCommands: 
+#credentialsCommands = runInterfazCrdentialsCommands (credentailsPath, commandsPath)
 
-    # Get credentials
-    imap       = credentialsCommands['credentials']['imap']
-    myEmail    = credentialsCommands['credentials']['myEmail']
-    password   = credentialsCommands['password']
-    fromEmail  = credentialsCommands['credentials']['fromEmail']
-    folder     = credentialsCommands['credentials']['folder']
-    search     = credentialsCommands['credentials']['search']
-    secredWord = credentialsCommands['secredWord']
+# Run interfaz
+myInterfaz = Interfaz (pathCredentails, pathConfig)
+commandsInterfaz = Interfaz (commandsPath, pathConfig)
 
-    # Acess and return all menssage
-    allEmails = readEmails (imap, myEmail, password, folder, search)
+# Get credentials
+credentials = myInterfaz.getCredentials()
+myEmail    = credentials['myEmail']
+password   = credentials['pass']
+fromEmail  = credentials['fromEmail']
+imap       = credentials['imap']
+folder     = credentials['folder']
+search     = credentials['search']
+secretWord = credentials['secretWord']
 
-    # Get command words
-    filterMails = filterMails (allEmails, fromEmail, secredWord)
-    commandWords = getCommandWords (filterMails)
+# Acess and return all menssage
+allEmails = readEmails (imap, myEmail, password, folder, search)
 
+# Get command words
+filterMails = filterMails (allEmails, fromEmail, secretWord)
+commandWords = getCommandWords (filterMails)
+
+if commandWords: 
+    # Check the command files and run instrucctions
+    filesCSV = getFiles (pathCommands)
+    if filesCSV:
+        runCommands (pathCommands, commandWords)
+    else: 
+        addCommand (pathCommands)
+
+
+
+
+"""
     if commandWords: 
         # Run command files
         for word in commandWords: 
@@ -50,3 +67,4 @@ if credentialsCommands:
         print ('No new command emails. Check the information of the new emails.')
     
 # Run each 15 minutes with cron
+"""

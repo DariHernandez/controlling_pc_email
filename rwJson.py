@@ -1,6 +1,5 @@
-#! python2
-# read and write json files.
-
+#! python3
+# Functions to read and write json files
 import json
 
 def readJsonFile (path): 
