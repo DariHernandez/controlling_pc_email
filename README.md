@@ -153,6 +153,10 @@ $ Other instruction (y/n)
 
 ## Emails example
 
-![Email to open a web page] (link)
+Email to open a web page
 
-![Email to open a program and a file] (link)
+![Email to open a web page](https://github.com/DariHernandez/controlling_pc_email/blob/master/secreenshots/email_github.jpg)
+
+Email to open a program and a file
+
+![Email to open a program and a file](https://github.com/DariHernandez/controlling_pc_email/blob/master/secreenshots/email_project.jpg)
