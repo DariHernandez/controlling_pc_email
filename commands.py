@@ -1,6 +1,6 @@
 #! python3
 # Run an get specific secuence of commands
-import webbrowser, subprocess
+import webbrowser, subprocess, send2trash
 import logging, os, csv
 
 currentDir = os.path.dirname(__file__)
@@ -17,7 +17,6 @@ def getCommandWords (filterMails):
         commandWords.append(text)
 
     return commandWords
-
 
 def getFiles (path): 
     """ Return a list of csv files in specific folder"""
@@ -36,20 +35,21 @@ def printFiles (path):
         name = str(os.path.basename (file))[:-4]
         print (name)
 
-def check_path (path, pathType): 
-    check = False
-    if pathType == "dir": 
-        check = os.path.isdir(path)
-    elif pathType == "file": 
-        check = os.path.isfile(path)
-    elif pathType == "exist": 
-        check = os.path.exists(path)
-    return check
-
 def request_command_file (menssage, pathType): 
+    """ Request input user and validate"""
     while True: 
         command = input ('%s \n- ' % menssage)
-        if check_path (command, pathType): 
+        check = False
+
+        # Validate path (input user)
+        if pathType == "dir": 
+            check = os.path.isdir(command)
+        elif pathType == "file": 
+            check = os.path.isfile(command)
+        elif pathType == "exist": 
+            check = os.path.exists(command)
+        
+        if check: 
             return command
         else: 
             print ('Incorrect path, try again')
@@ -96,7 +96,6 @@ def addCommand (path):
         if other.lower()[0] != 'y': 
             break
 
-
 def runCommands (path, words): 
     """ Run the instrucctions in the files"""
     files = getFiles(path)
@@ -128,3 +127,44 @@ def runCommands (path, words):
                     except: 
                         print ('Error to execute command "%s"' % command)
                         logging.warning(command)
+
+def deleteCommands (file): 
+    """ Delete a specific CSV filw with instrucctions"""
+    currentPath = os.path.dirname (__file__)
+    pathFile = os.path.join (currentPath, 'commands', file  + '.csv')
+
+    if os.path.exists (pathFile):
+        delete = input('Do you want to delete this key with all instrucctions? (y/n) ')
+
+        if delete.lower()[0] == 'y':
+            send2trash.send2trash (pathFile)
+            print ('%s deleted' % file)
+    else: 
+        print ('Key error. Try again. Use --help for more information.')
+
+def printCommands (file): 
+    """ Print each instrucction from a file """
+    currentPath = os.path.dirname (__file__)
+    pathFile = os.path.join (currentPath, 'commands', file + '.csv')
+
+    if os.path.exists (pathFile):
+        # Open file
+        fileCSV = open (os.path.join(pathFile), 'r')
+        readerCSV = csv.reader (fileCSV)
+        data = list (readerCSV)
+        data.sort()
+
+        # Print instrucctions
+        print ('Instrucctions of "%s":' % file)
+        for row in data: 
+            if int(row[0]) == 1: 
+                print ('web page: "%s"' % row[1])
+            elif int(row[0]) == 2: 
+                print ('program: "%s"' % row[1])
+            elif int(row[0]) == 3: 
+                print ('file: "%s", with program: "%s"' % (row[2], row[1]))
+
+    else: 
+        print ('Key error. Try again. Use --help for more information.')
+
+
