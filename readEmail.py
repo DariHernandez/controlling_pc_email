@@ -1,7 +1,7 @@
 #! python3
 # Read email and access to IMAP
 
-import imapclient, pyzmail, pprint, sys
+import imapclient, pyzmail, sys
 
 def readEmails (imap, myEmail, password, folder, search): 
     """ Get all emails from folder and search termns"""

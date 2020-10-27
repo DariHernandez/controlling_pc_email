@@ -1,7 +1,7 @@
 #! python3
 # Controlling pc with email
 
-import os, pprint, logging
+import os, logging
 from readEmail import readEmails, deleteMails, filterMails
 from commands import getCommandWords, addCommand, getFiles, runCommands
 from interfaz import Interfaz

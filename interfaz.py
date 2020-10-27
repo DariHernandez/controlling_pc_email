@@ -19,7 +19,7 @@ class Interfaz ():
         # Menssages
         helpMenssage = "\n write '-l --cred' to see all credentials. \
                         \n write '-l --keys' to see all instrucction keys. \
-                        \n write '-l --keys KEYNAME' to see all instrucctions from speicif key. \
+                        \n write '-l --keys KEYNAME' to see all instrucctions from specific key. \
                         \n write '-e --cred' to edit all credentials. \
                         \n write '-e --keys --add' to add new keys and instrucctions. \
                         \n write '-d --keys KEYNAME' to delete a specific key."
