@@ -18,8 +18,10 @@ def getCommandWords (filterMails):
 
     return commandWords
 
-def getFiles (path): 
+def getFiles (): 
     """ Return a list of csv files in specific folder"""
+    currentDir = os.path.dirname (__file__)
+    path = os.path.join (currentDir, 'commands')
     csvFiles = []
     files = os.listdir (path)
     for file in files: 
@@ -27,9 +29,9 @@ def getFiles (path):
             csvFiles.append (file)
     return csvFiles
 
-def printFiles (path): 
+def printFiles (): 
     """ Print csv files (only the name)"""
-    files = getFiles(path)
+    files = getFiles()
     print ('The commands are:')
     for file in files: 
         name = str(os.path.basename (file))[:-4]
@@ -54,8 +56,10 @@ def request_command_file (menssage, pathType):
         else: 
             print ('Incorrect path, try again')
 
-def addCommand (path): 
+def addCommand (): 
     """ Add new command to files"""
+    currentDir = os.path.dirname (__file__)
+    path = os.path.join (currentDir, 'commands')
     print ('Indicates what to do when an instruction email is received')
     while True:
         # File and key name
@@ -96,9 +100,11 @@ def addCommand (path):
         if other.lower()[0] != 'y': 
             break
 
-def runCommands (path, words): 
+def runCommands (words): 
     """ Run the instrucctions in the files"""
-    files = getFiles(path)
+    currentDir = os.path.dirname (__file__)
+    path = os.path.join (currentDir, 'commands')
+    files = getFiles()
 
     # Verify the command words
     for word in words: 
