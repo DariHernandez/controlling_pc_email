@@ -80,14 +80,14 @@ def addCommand ():
         file = ""
         # Request web page
         if key == 1: 
-            command = input ('Type the web page:')
+            command = input ('Type the web page: ')
         # Request program
         elif key == 2: 
-            command = request_command_file ('Type the complite path of the program:', "file")
+            command = request_command_file ('Type the complite path of the program: ', "file")
         # Request program and file
         elif key == 3:
-            command = request_command_file('Type the complite path of the program that will open the file:', "file")
-            file = request_command_file('Type the file path:', "exist")
+            command = request_command_file('Type the complite path of the program that will open the file: ', "file")
+            file = request_command_file('Type the file path: ', "exist")
 
         # Write the file
         pathCSV = os.path.join (path, fileName + '.csv')
@@ -96,7 +96,7 @@ def addCommand ():
         writerSCV.writerow ([key, command, file])
 
         # Chedck loop
-        other = input ('Other instruction (y/n)')
+        other = input ('Other instruction (y/n) ')
         if other.lower()[0] != 'y': 
             break
 
@@ -152,6 +152,7 @@ def printCommands (file):
     """ Print each instrucction from a file """
     currentPath = os.path.dirname (__file__)
     pathFile = os.path.join (currentPath, 'commands', file + '.csv')
+    print (pathFile)
 
     if os.path.exists (pathFile):
         # Open file

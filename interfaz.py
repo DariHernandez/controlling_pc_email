@@ -1,6 +1,7 @@
 #! python3
 import json, os, sys
 from rwJson import readJsonFile, writeJsonFile
+from commands import printCommands, deleteCommands, addCommand, printFiles
 
 class Interfaz ():
     """Class to execute an interface from terminal, managing user credentials"""
@@ -16,12 +17,12 @@ class Interfaz ():
 
 
         # Menssages
-        helpMenssage = "Run the interfaz.py to request credentials or configuration of credentials. \
-        \n interfaz.py return the current credentials.\
-        \n write '-l --cred' to see all credentials \
-        \n write '-l --config' to see all credentials configuration options. \
-        \n write '-e --config' to edit all credentials configuration options. \
-        \n write '-e --cred' to edit all credentials"
+        helpMenssage = "\n write '-l --cred' to see all credentials. \
+                        \n write '-l --keys' to see all instrucction keys. \
+                        \n write '-l --keys KEYNAME' to see all instrucctions from speicif key. \
+                        \n write '-e --cred' to edit all credentials. \
+                        \n write '-e --keys --add' to add new keys and instrucctions. \
+                        \n write '-d --keys KEYNAME' to delete a specific key."
         
         errorMenssage = "Incorrect input. Write --help for more information"
 
@@ -30,35 +31,44 @@ class Interfaz ():
             if sys.argv [1] == '--help':
                 # Print help menssage
                 print (helpMenssage)
-                sys.exit()
             else: 
                 print (errorMenssage)
-                sys.exit()
-        elif len(sys.argv) == 3: 
+            sys.exit()
+        elif  len(sys.argv) > 2:
             if sys.argv [1] == '-l':
-                # List json files info
-                if sys.argv [2] == '--config':
-                    # Return list of info
-                    self.printConfigCredentials()
+                # List json and csv files info
+                if sys.argv [2] == '--keys':
+                    # Return list of keys or instrucctions
+                    if len(sys.argv) == 4: 
+                        # print instrucctions from a file
+                        printCommands (sys.argv [3])
+                    else: 
+                        # print list of keys
+                        printFiles ()                    
                 elif sys.argv [2] == '--cred':
                     # Return list of info
                     self.printCredentials()
                 else: 
                     print (errorMenssage)
-                    sys.exit()
             elif sys.argv [1] == '-e':
                 # Edit json files
-                if sys.argv [2] == '--config':
-                    # Return list of info
-                    self.requestConfigCredentials()
+                if sys.argv [2] == '--keys' and len(sys.argv) == 4:
+                    if sys.argv[3] == '--add': 
+                        # add keys
+                        addCommand ()
+                    else: 
+                        print (errorMenssage)
                 elif sys.argv [2] == '--cred':
-                    # Return list of info
+                    # Requet credentials
                     self.requestCredentials()
                 else: 
                     print (errorMenssage)
-                    sys.exit()
+            elif sys.argv [1] == '-d' and sys.argv [2] == '--keys' and len(sys.argv) == 4:
+                # Delete epecific key
+                deleteCommands (sys.argv [3])
             else: 
                 print (errorMenssage)
+            sys.exit()
 
         # Read files. 
         configCredentials = readJsonFile (pathConfigCredentialsFile)

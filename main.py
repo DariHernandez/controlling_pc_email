@@ -6,17 +6,17 @@ from readEmail import readEmails, deleteMails, filterMails
 from commands import getCommandWords, addCommand, getFiles, runCommands
 from interfaz import Interfaz
 
+# Running menssage
+print ("Reading emails...")
+
 # Files and initial vars
 currentDir = os.path.dirname(__file__)
-pathCommands = os.path.join (currentDir, 'commands')
 pathCredentails = os.path.join(currentDir, 'credentials.json')
 pathConfig = os.path.join(currentDir, 'config.json')
-commandsPath = os.path.join(currentDir, 'commands.json')
 logPath = os.path.join(currentDir, 'logs.txt')
 
 # Run interfaz
 myInterfaz = Interfaz (pathCredentails, pathConfig)
-commandsInterfaz = Interfaz (commandsPath, pathConfig)
 
 # Get credentials
 credentials = myInterfaz.getCredentials()
@@ -37,11 +37,11 @@ commandWords = getCommandWords (filterMails)
 
 if commandWords: 
     # Check the command files and run instrucctions
-    filesCSV = getFiles (pathCommands)
+    filesCSV = getFiles ()
     if filesCSV:
-        runCommands (pathCommands, commandWords)
+        runCommands (commandWords)
     else: 
-        addCommand (pathCommands)
+        addCommand ()
     
     # Delete read menssage
     UIDs = []
