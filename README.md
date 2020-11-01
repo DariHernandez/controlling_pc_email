@@ -1,5 +1,6 @@
 # controlling_pc_email
 ## Description
+This is a terminal project.
 With this program you will **control your pc via email(open files, open programs and open web pages)**
 
 After configurate your email information and instrucctions, the program will be: 
