@@ -1,14 +1,15 @@
 # controlling_pc_email
 ## Description
+This is a terminal project.
 With this program you will **control your pc via email(open files, open programs and open web pages)**
 
 After configurate your email information and instrucctions, the program will be: 
 
-1. Access to you email.
-2. Read the new email from the inbox.
-3. Validate information: from mail, secret word and instrucction. 
-4. Run a group of previously configured instrucctions.
-5. Delete the email from the inbox. 
+**1. Access to you email.**
+**2. Read the new email from the inbox.**
+**3. Validate information: from mail, secret word and instrucction.**
+**4. Run a group of previously configured instrucctions.**
+**5. Delete the email from the inbox.**
 
 # Install modules
 
