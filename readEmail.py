@@ -36,13 +36,17 @@ def readEmails (imap, myEmail, password, folder, search):
         message = pyzmail.PyzMessage.factory(rawMessage[uid][b'BODY[]'])
         fromEmail = message.get_address('from')
         subject = message.get_subject()
+        other = message.get_payload(1)
+        print (other)
         text = ''
         if message.text_part: 
-            text = message.text_part.get_payload().decode(message.text_part.charset)
+            text = message.text_part.get_payload()
+            text = text.decode(message.text_part.charset)
             text = text[:-2]
         dicReturn[uid] = {'fromMail': fromEmail, 
                             'text': text, 
-                            'subject': subject}
+                            'subject': subject
+                            }
     
     return dicReturn
 
@@ -71,3 +75,5 @@ def filterMails (infoDic, fromEmail, secretWord):
     return dicReturn
 
 
+emails = readEmails ("imap.gmail.com", "darialternative@gmail.com", "AliciaParadoxa1999x3", "INBOX", "UNSEEN")
+filtered_emails = filterMails(emails, "hernandezdarifrancisco@gmail.com", "hello")
